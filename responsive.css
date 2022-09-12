@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+}
+
+/*---------------------memo-----------------
+1168px  73em(floatが崩れる用)
+1024px  64em(LapTop)
+        53em(header,float,profileが崩れる用)
+ 768px  48em(Tablet)
+        43em(floatが崩れる用)
+        40em(headerが崩れる用)
+ 425px  27em(Mobile L)
+ 375px  24em(Mobile M)
+ 320px  20em(Mobile S)
+---------------------------------------------*/
+
+/* --------------73em(floatが崩れる)への対応-----------------*/
+@media (max-width: 73em) {
+    #wrapper-oyatsu > .container > p,#wrapper-outi > .container > p {
+        font-size: 1em;
+    }
+    #oyatsu-figure > img {
+        margin-right: 8em;
+    }
+}
+
+/* --------------53em(header,floatが崩れる)への対応-----------------*/
+@media (max-width: 53em) {
+    /* header */
+    header {
+        font-size: 0.6em;
+    }
+    .is-animation {
+        font-size: 0.4em;
+    }
+    
+    /* wrapper-oyatsu,#wrapper-outi */
+    #wrapper-oyatsu > .container > p,#wrapper-outi > .container > p {
+        font-size: 0.8em;
+    }
+    #oyatsu-figure > img {
+        margin-right: 6em;
+    }
+    /* profile */
+    .btn {
+        display: block;
+    }
+    .inst {
+        margin-right: 0px;
+        margin-bottom: 1em;
+    }
+}
+
+/* --------------768pxサイズ48em(Tablet)への対応-----------------*/
+@media (max-width: 48em) {
+    #wrapper-opti-how p,#wrapper-raw p {
+        font-size: 1.3em;
+    } 
+    #wrapper-profile > .container > p,.btn {
+        font-size: 1em;
+    }
+    #wrapper-info {
+        width: 15em;
+        margin: 0 auto;
+    }
+    
+    #wrapper-profile img {
+        width: 10em;
+        height: 10em;
+    }
+}
+/* --------------43em(floatが崩れる)への対応-----------------*/
+@media (max-width: 43em) {
+    #wrapper-oyatsu > .container > p,#wrapper-outi > .container > p {
+        font-size: 0.6em;
+    }
+    #oyatsu-figure > img {
+        margin-right: 4em;
+    }
+    #outi-figure > img {
+        margin-left: 4em;
+    }
+}
+/* --------------40em(headerが崩れる)への対応-----------------*/
+@media (max-width: 40em) {
+    header {
+        font-size: 0.4em;
+    }
+    .is-animation {
+        font-size: 0.3em;
+    }
+    
+    .is-img-animation {
+        width: 8em!important;
+    }
+}
+
+/* --------------425px27em(Mobile L)サイズへの対応-----------------*/
+@media (max-width: 27em) {
+    header {
+        font-size: 0.1em;
+    }
+
+    .is-animation {
+        font-size: 0.1em;
+    }
+
+
+    h1 {
+        font-size: 2em;
+    }
+
+    #main-visual-h2,.main-visual-h2-sub {
+        font-size: 1em;
+    }
+    
+    h2 {
+        font-size: 1.2em;
+    }
+
+    .fa-birthday-cake,.fa-cookie-bite,.fa-bread-slice,.fa-pagelines,.fa-book-open,.fa-meh-blank,.fa-paper-plane {
+        font-size: 2em;
+    }
+
+    #wrapper-opti-how p {
+        font-size: 0.6em;
+    }
+}
+
