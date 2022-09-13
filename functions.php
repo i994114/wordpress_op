@@ -192,10 +192,17 @@ function save_custom_postdata($post_id) {
 //----------------
 //カスタムウィジェット
 //----------------
+//宣言欄
 add_action('widgets_init', 'pop1_area');
 add_action('widgets_init', function(){register_widget( 'Pop1_Widget' );});
 
+//Aboutページ
+add_action('widgets_init', 'about_area');
+add_action('widgets_init', function(){register_widget( 'About_Widget' );});
+
+//--------------------
 //ウィジェットエリアの作成
+//--------------------
 function pop1_area() {
     register_sidebar( array(
         'name' => '宣伝記載エリア',
@@ -204,8 +211,19 @@ function pop1_area() {
         'after_widget' => '</div>'
     ));
 }
+function about_area() {
+    register_sidebar( array(
+        'name' => '講師紹介エリア',
+        'id' => 'widget_about',
+        'before_widget' => '<div>',
+        'after_widget' => '</div>'
+    ));
+}
 
+//------------------
 //ウィジェット自体の作成
+//------------------
+//宣伝欄
 class Pop1_Widget extends WP_Widget {
     public function __construct() {
         parent::__construct(false, $name = '宣伝1');
@@ -278,6 +296,84 @@ class Pop1_Widget extends WP_Widget {
             </div>
             <p>
                 <?php echo $body; ?>
+            </p>
+<?php
+        }
+    }
+}
+
+//スタッフ紹介欄
+class About_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(false, $name="スタッフ紹介");
+    }
+
+    function form($instance) {
+        //ポスト送信されていたらサニタイズして変数に格納
+        if (isset($_POST['staff_img'])) {
+            $staff_img = $_POST['staff_img'];
+        }
+        if (isset($_POST['staff_name'])) {
+            $staff_name = $_POST['staff_name'];
+        }
+        if (isset($_POST['staff_msg'])) {
+            $staff_msg = $_POST['staff_msg'];
+        }
+?>
+        <!-- スタッフの画像 -->
+        <p>
+            <label for="<?php echo $this->get_field_id('staff_img'); ?>">
+                <?php echo 'スタッフ画像URL'; ?>
+            </label>
+            <textarea cols="50" rows="5" name="<?php echo $this->get_field_name('staff_img'); ?>" value="<?php echo $staff_img; ?>"></textarea>
+        </p>
+
+        <!-- スタッフ名前 -->
+        <p>
+            <label for="<?php echo $this->get_field_id('staff_name'); ?>">
+                <?php echo 'スタッフ名'; ?>
+            </label>
+            <input class="widefat" id="<?php echo $this->get_field_id('staff_name') ?>" name="<?php  echo $this->get_field_name('staff_name'); ?>" type="text" value="<?php echo $staff_name; ?>">
+        </p>
+
+        <!-- スタッフ紹介文 -->
+        <p>
+            <label for="<?php echo $this->get_field_id('staff_msg'); ?>">
+                <?php echo 'スタッフ紹介文'; ?>
+            </label>
+            <textarea cols="50" rows="5" name="<?php echo $this->get_field_name('staff_msg'); ?>" type="text" value="<?php  echo $staff_msg; ?>"></textarea>
+        </p>
+<?php
+    }
+    //ウィジェットに格納された情報を保存する
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['staff_img'] = strip_tags($new_instance['staff_img']);
+        $instance['staff_name'] = trim($new_instance['staff_name']);
+        $instance['staff_msg'] = trim($new_instance['staff_msg']);
+
+        return $instance;
+    }
+
+    //管理画面から入力されたウィジェットを画面に表示する処理
+    function widget($args, $instance) {
+        //配列を変数に格納
+        extract($args);
+
+        //ウィジェットから入力された情報を取得
+        $staff_img = apply_filters('widget_staff_img', $instance['staff_img']);
+        $staff_name = apply_filters('widget_staff_name', $instance['staff_name']);
+        $staff_msg = apply_filters('widget_staff_msg', $instance['staff_msg']);
+
+        //ウィジェットから入力された情報がある場合、htmlを表示する
+        if ($staff_name) {
+?>
+            <figure>
+                <img src="<?php echo $staff_img; ?>">
+                <figcaption><?php echo $staff_name; ?></figcaption>
+            </figure>
+            <p>
+                <?php echo $staff_msg; ?>
             </p>
 <?php
         }

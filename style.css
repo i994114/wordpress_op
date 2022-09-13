@@ -234,12 +234,7 @@ h2 {
     background-size:cover;
     text-align: center;
     padding: 3em 0 10em 0;
-}
-
-#wrapper-profile figure {
-    padding: 5em 0 2em 0;
-    text-align: center;
-}   
+}  
 
 #wrapper-profile img {
     border-radius: 50%;
@@ -252,27 +247,6 @@ h2 {
     text-align: center;
     font-size: 1.5em;
 }
-
-
-.btn {
-    display: inline-block;
-    background-color: aqua;
-    border: 3px solid blueviolet;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.5em;
-    padding: 0.5em;
-}
-
-.inst {
-    margin-right: 350px;
-}
-
-#wrapper-info {
-    text-align: center;
-    padding-top: 5em;
-}
-
 /*--------------qa------------------------------------------*/
 #qa-form {
     background-color:rgb(255, 0, 85);
