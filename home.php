@@ -6,6 +6,10 @@ Template Name: Home　〜トップページ〜
 <!-- ヘッダー -->
 <?php get_header(); ?>
 
+
+<!-- いったんはカスタムフィールドでもともとのサイトとおりに作成したが、手間なのと、そのままだとカスタムウィジェットをつかう機会がないので、 -->
+<!-- 今回は、各宣伝部分は、ひとつめはカスタムフィールド、のこりはカスタムウィジェットですべて中央揃えにすることとする。 -->
+
 <!-- メニュー -->
 <?php get_template_part('content', 'menu'); ?>
         <div id="main-visual">
@@ -41,29 +45,6 @@ Template Name: Home　〜トップページ〜
                 <?php dynamic_sidebar('宣伝記載エリア'); ?>
             </div>
         </div>
-
-        <!-- みっつ目見出し -->
-        <div id="wrapper-outi">
-            <div class="container">
-                <div class="fas fa-bread-slice"></div>
-                <?php dynamic_sidebar('広告記載エリア') ?>
-            </div>
-        </div>
-
-        <!-- よっつ目見出し -->
-        <div id="wrapper-raw">
-            <div class="container">
-                <div class="fab fa-pagelines"></div>
-                <h2><?php echo get_post_meta($post->ID, 'pop4_title', true); ?></h2>
-                <div class="raw-figure">
-                    <img src="<?php echo get_post_meta($post->ID, 'pop4_img1', true); ?>">
-                </div>
-                <p>
-                    <?php echo get_post_meta($post_id, 'pop4_msg', true); ?>
-                </p>
-            </div>
-        </div>
-
 
         <div id="wrapper-menu">
             <div class="container">

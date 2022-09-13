@@ -13,19 +13,12 @@ Template Name: Contact　〜お問い合わせ〜
 <div id="qa-form">
     <div class="container qa-back">
         <div class="far fa-paper-plane"></div>
-        <h2><?php get_the_title(); ?></h2>
+        <h2><?php echo get_the_title(); ?></h2>
         <p>
-            レッスンについて、何かあればこちらでご連絡ください。<br>
-            なんでもよいですよ～。<br><br>
-
-            例えばこんな感じで。<br>
-            ・レッスンを予約したい<br>
-            ・レッスンの内容を問い合わせたい<br>
-            ・レッスン日時や場所を調整したい<br>
+            <?php echo get_post_meta($post->ID, 'contact', true); ?>
         </p>
+
         <div class="animated bounce infinite">↓どうぞお気軽に↓</div><br>
-        <div class="far fa-envelope">mail<br>nagomine.ena@gmail.com<br></div><br><br>
-        <div class="fab fa-line">Line</div>
 
         <form>
             <ul>

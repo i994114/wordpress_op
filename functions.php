@@ -66,6 +66,10 @@ function add_custom_inputbox() {
     add_meta_box('pop1_img1_id', '1つ目見出し画像1', 'pop1_img1_area', 'page', 'normal');
     add_meta_box('pop1_img2_id', '1つ目見出し画像2', 'pop1_img2_area', 'page', 'normal');
     add_meta_box('pop1_about_id', '説明入力欄', 'pop1_custom_area', 'page', 'normal');
+    //Map
+    add_meta_box('map_id', '地図', 'access_map', 'page', 'normal');
+    //Contact
+    add_meta_box('contact_id', '連絡先欄コメント', 'contact_msg', 'page', 'normal');
 }
 //--------------------------------
 //管理画面入力欄の関数の実体
@@ -91,6 +95,18 @@ function pop1_custom_area() {
     echo ' 宣伝1 説明欄:<textarea cols="50" rows="10" name="pop1_msg">'.get_post_meta($post->ID, 'pop1_msg', true).'</textarea><br>';
 }
 
+//地図
+function access_map() {
+    global $post;
+    echo 'Google map URL: <textarea cols="50" rows="5" name="map_url">'.get_post_meta($post->ID, 'map_url', true).'</textarea><br>';
+}
+//Contact msg
+function contact_msg() {
+    global $post;
+    echo '問い合わせフォーム前のコメント：<textarea cols="50" rows="5" name="contact">'.get_post_meta($post->ID, 'contact', true).'</textarea>
+    ';
+}
+
 //----------------------
 //記事に表示する内容
 //(DBに保存するための処理)
@@ -100,6 +116,10 @@ function save_custom_postdata($post_id) {
     $pop1_img1 = '';
     $pop1_img2 = '';
     $pop1_msg = '';
+
+    $map_url = '';
+
+    $contact = '';
 
     //------------------------------------
     //カスタムフィールドに入力された情報を取り出す
@@ -118,6 +138,16 @@ function save_custom_postdata($post_id) {
         $pop1_msg = $_POST['pop1_msg'];
     }
 
+    //map
+    if (isset($_POST['map_url'])) {
+        $map_url = $_POST['map_url'];
+    }
+
+    //Contact
+    if (isset($_POST['contact'])) {
+        $contact = $_POST['contact'];
+    }
+
     //-----------------------------------------
     //内容が変わっていた場合、保存していた情報を更新する
     //-----------------------------------------
@@ -125,17 +155,17 @@ function save_custom_postdata($post_id) {
     //ひとつ目の見出し
     if ($pop1_title != get_post_meta($post_id, 'pop1_title', true)) {
         update_post_meta($post_id, 'pop1_title', $pop1_title);
-    } else {
+    } else if($pop1_title == '') {
         delete_post_meta($post_id, 'pop1_title', get_post_meta($post_id, 'pop1_title', true));
     }
     if ($pop1_img1 != get_post_meta($post_id, 'pop1_img1', true)) {
         update_post_meta($post_id, 'pop1_img1', $pop1_img1);
-    } else {
+    } else if($pop1_img1 == '') {
         delete_post_meta($post_id, 'pop1_img1', get_post_meta($post_id, 'pop1_img1', true));
     }
     if ($pop1_img2 != get_post_meta($post_id, 'pop1_img2',true)) {
         update_post_meta($post_id, 'pop1_img2', $pop1_img2);
-    } else {
+    } else if($pop1_img2 == '') {
         delete_post_meta($post_id, 'pop1_img2', get_post_meta($post_id, 'pop1_img2',true));
     }
     if ($pop1_msg != get_post_meta($post_id, 'pop1_msg', true)) {
@@ -144,6 +174,19 @@ function save_custom_postdata($post_id) {
         delete_post_meta($post_id, 'pop1_msg', get_post_meta($post_id, 'pop1_msg', true));
     }
 
+    //map
+    if ($map_url != get_post_meta($post_id, 'map_url', true)) {
+        update_post_meta($post_id, 'map_url', $map_url);
+    } else if ($map_url == '') {
+        delete_post_meta($post_id, 'map_url', get_post_meta($post_id, 'map_url', true));
+    }
+
+    //Contact
+    if ($contact != get_post_meta($post_id, 'contact', true)) {
+        update_post_meta($post_id, 'contact', $contact);
+    } else if ($contact == '') {
+        delete_post_meta($post_id, 'contact', get_post_meta($post_id, 'contact', true));
+    } 
 }
 
 //----------------
@@ -240,6 +283,3 @@ class Pop1_Widget extends WP_Widget {
         }
     }
 }
-
-
-

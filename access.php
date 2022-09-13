@@ -14,9 +14,9 @@ Template Name: Access〜住所やWeb情報〜
 
     <!-- blog_list -->
     <section id="map">
-        <h1 class="title"><?php get_the_title(); ?></h1>
+        <h1 class="animated fadeindown slow" style="text-align: center;"><?php echo get_the_title(); ?></h1>
         <div id="content">
-            <?php get_post_meta($post->ID, 'map', 'true'); ?>
+            <?php echo get_post_meta($post->ID, 'map_url', 'true'); ?>
         </div>					
     </section>
     
