@@ -192,6 +192,10 @@ function save_custom_postdata($post_id) {
 //----------------
 //カスタムウィジェット
 //----------------
+//h1画像
+add_action('widgets_init', 'h1_area');
+add_action('widgets_init', function(){register_widget( 'H1_Widget' );});
+
 //宣言欄
 add_action('widgets_init', 'pop1_area');
 add_action('widgets_init', function(){register_widget( 'Pop1_Widget' );});
@@ -203,6 +207,15 @@ add_action('widgets_init', function(){register_widget( 'About_Widget' );});
 //--------------------
 //ウィジェットエリアの作成
 //--------------------
+function h1_area() {
+    register_sidebar(array(
+        'name' => 'トップエリア',
+        'id' => 'widget_h1',
+        'before_widget' => '<div>',
+        'after_widget' => '</div>'
+    ));
+}
+
 function pop1_area() {
     register_sidebar( array(
         'name' => '宣伝記載エリア',
@@ -223,6 +236,70 @@ function about_area() {
 //------------------
 //ウィジェット自体の作成
 //------------------
+//h1エリア
+class H1_Widget extends WP_widget {
+    public function __construct() {
+        parent::__construct(false, $name = 'トップ画像');
+    }
+    
+    function form($instance) {
+        //ポスト送信されていたらサニタイズして変数に格納
+        if (isset($_POST['h1_title'])) {
+            $h1_title = $_POST['h1_title'];
+        }
+        if (isset($_POST['sub_title'])) {
+            $sub_title = $_POST['sub_title'];
+        }
+?>
+        <!-- h1タイトル -->
+        <p>
+            <label for="<?php echo $this->get_field_id('h1_title'); ?>">
+                <?php echo 'h1タイトル:' ?>
+            </label>
+            <input class="widefat" id="<?php echo $this->get_field_id('h1_title'); ?>" name="<?php echo $this->get_field_name('h1_title'); ?>" type="text" value="<?php echo $h1_title; ?>">
+        </p>
+        <!-- サブタイトル -->
+        <p>
+            <label for="<?php echo $this->get_field_id('sub_title'); ?>">
+                <?php echo 'サブタイトル:' ?>
+                <input class="widefat" id="<?php echo $this->get_field_id('sub_title'); ?>" name="<?php  echo $this->get_field_name('sub_title'); ?>" type="text" value="<?php echo $sub_title; ?>">
+            </label>
+        </p>
+<?php
+    }
+    //ウィジェットに入力された情報を保存する処理
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['h1_title'] = strip_tags(($new_instance['h1_title']));
+        $instance['sub_title'] = strip_tags($new_instance['sub_title']);
+
+        return $instance;
+    }
+
+    //管理画面から入力されたウィジェットを画面に表示する処理
+    function widget($argc, $instance) {
+        //配列を変数に格納
+        extract($argc);
+
+        //ウィジェットから入力された情報を取得
+        $h1_title = apply_filters('widget_h1_title', $instance['h1_title']);
+        $sub_title = apply_filters('widget_sub_title', $instance['sub_title']);
+
+        if ($h1_title) {
+?>
+            <h1 class="animated fadeindown slow"><?php echo $h1_title; ?></h1>
+            <h2 id="main-visual-h2" class="animated fadein delay-2s"><?php echo $sub_title; ?></h2>
+<!--
+            <h2 class="main-visual-h2-sub animated fadein slow">オプティボロール</h2>
+            <h2 class="main-visual-h2-sub animated slow">かんたんおやつ</h2>
+            <h2 class="main-visual-h2-sub animated fadein slow">おうちパン</h2>
+            <h2 class="main-visual-h2-sub animated fadein slow">Raw</h2>
+-->
+<?php
+        }
+    }
+}
+
 //宣伝欄
 class Pop1_Widget extends WP_Widget {
     public function __construct() {

@@ -12,14 +12,10 @@ Template Name: Home　〜トップページ〜
 
 <!-- メニュー -->
 <?php get_template_part('content', 'menu'); ?>
+        <!--　h1画像　-->
         <div id="main-visual">
             <div class="container">
-                <h1 class="animated fadeindown slow">nagomine</h1>
-                <h2 id="main-visual-h2" class="animated fadein delay-2s">"かんたんおやつ"及び"おうちパン"を提供する、子育てで忙しいママのための「癒し」の教室</h2>
-                <h2 class="main-visual-h2-sub animated fadein slow">オプティボロール</h2>
-                <h2 class="main-visual-h2-sub animated slow">かんたんおやつ</h2>
-                <h2 class="main-visual-h2-sub animated fadein slow">おうちパン</h2>
-                <h2 class="main-visual-h2-sub animated fadein slow">Raw</h2>
+                <?php dynamic_sidebar('トップエリア') ?>
             </div>
         </div>
         
