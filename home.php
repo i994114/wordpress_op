@@ -38,13 +38,7 @@ Template Name: Home　〜トップページ〜
         <div id="wrapper-oyatsu">
             <div class="container">
                 <div class="fas fa-cookie-bite"></div>
-                <h2 class="h2-tittle"><?php echo get_post_meta($post->ID, 'pop2_title', true); ?></h2>
-                <div id="oyatsu-figure">
-                    <img src="<?php echo get_post_meta($post->ID, 'pop2_img1', true); ?>">
-                </div>
-                <p>
-                    <?php echo get_post_meta($post->ID, 'pop2_msg', true); ?>
-                </p>
+                <?php dynamic_sidebar('宣伝記載エリア'); ?>
             </div>
         </div>
 
@@ -52,13 +46,7 @@ Template Name: Home　〜トップページ〜
         <div id="wrapper-outi">
             <div class="container">
                 <div class="fas fa-bread-slice"></div>
-                <h2 class="h2-tittle"><?php echo get_post_meta($post->ID, 'pop3_title', true); ?></h2>
-                <div id="outi-figure">
-                    <img src="<?php echo get_post_meta($post->ID, 'pop3_img1', true); ?>">
-                </div>
-                <p>
-                    <?php echo get_post_meta($post->ID, 'pop3_msg', true); ?>
-                </p>
+                <?php dynamic_sidebar('広告記載エリア') ?>
             </div>
         </div>
 

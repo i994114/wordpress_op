@@ -64,23 +64,8 @@ function add_custom_inputbox() {
     //ひとつ目の見出し
     add_meta_box('pop1_title_id', '1つ目見出し', 'pop1_title_area', 'page', 'normal');
     add_meta_box('pop1_img1_id', '1つ目見出し画像1', 'pop1_img1_area', 'page', 'normal');
-    add_meta_box('pop
-    1_img2_id', '1つ目見出し画像2', 'pop1_img2_area', 'page', 'normal');
+    add_meta_box('pop1_img2_id', '1つ目見出し画像2', 'pop1_img2_area', 'page', 'normal');
     add_meta_box('pop1_about_id', '説明入力欄', 'pop1_custom_area', 'page', 'normal');
-    //ふたつ目の見出し
-    add_meta_box('pop2_title', '2つ目見出し', 'pop2_title_area', 'page', 'normal');
-    add_meta_box('pop2_img1', '2つ目見出し画像1', 'pop2_img1_area', 'page', 'normal');
-    add_meta_box('pop2_about_id', '説明入力欄', 'pop2_custom_area', 'page', 'normal');
-
-    //みっつ目の見出し
-    add_meta_box('pop3_title_id', '3つ目見出し', 'pop3_title_area', 'page', 'normal');
-    add_meta_box('pop3_img1_id', '3つ目見出し画像1', 'pop3_img1_area', 'page', 'normal');
-    add_meta_box('pop3_about_id', '説明入力欄', 'pop3_custom_area', 'page', 'normal');
-
-    //よっつ目の見出し
-    add_meta_box('pop4_title_id', '4つ目見出し','pop3_title_area', 'page', 'normal');
-    
-
 }
 //--------------------------------
 //管理画面入力欄の関数の実体
@@ -106,34 +91,6 @@ function pop1_custom_area() {
     echo ' 宣伝1 説明欄:<textarea cols="50" rows="10" name="pop1_msg">'.get_post_meta($post->ID, 'pop1_msg', true).'</textarea><br>';
 }
 
-//ふたつ目の見出し
-function pop2_title_area() {
-    global $post;
-    echo '宣伝2 見出し:<textarea cols="30" rows="1" name="pop2_title">'.get_post_meta($post->ID, 'pop2_title', true).'</textarea><br>';
-}
-function pop2_img1_area() {
-    global $post;
-    echo '宣伝2 画像1:<textarea cols="50" rows="5" name="pop2_img1">'.get_post_meta($post->ID, 'pop2_img1', true).'</textarea><br>';
-}
-function pop2_custom_area() {
-    global $post;
-    echo '宣伝2 説明欄:<textarea cols="50" rows="10" name="pop2_msg">'.get_post_meta($post->ID, 'pop2_msg', true).'</textarea><br>';
-}
-
-//みっつ目の見出し
-function pop3_title_area() {
-    global $post;
-    echo '宣伝3 見出し:<textarea cols="30" rows="1" name="pop3_title">'.get_post_meta($post->ID, 'pop3_title', true).'</textarea>';
-}
-function pop3_img1_area() {
-    global $post;
-    echo '宣伝3 画像:<textarea cols="50" rows="5" name="pop3_img1">'.get_post_meta($post->ID, 'pop3_img1', true).'</textarea>';
-}
-function pop3_custom_area() {
-    global $post;
-    echo '宣伝3 説明欄:<textarea cols="50" rows="10" name="pop3_msg">'.get_post_meta($post->ID, 'pop3_msg', true).'</textarea>';
-}
-
 //----------------------
 //記事に表示する内容
 //(DBに保存するための処理)
@@ -143,14 +100,6 @@ function save_custom_postdata($post_id) {
     $pop1_img1 = '';
     $pop1_img2 = '';
     $pop1_msg = '';
-
-    $pop2_title = '';
-    $pop2_img1 = '';
-    $pop2_msg = '';
-
-    $pop3_title = '';
-    $pop3_img1 = '';
-    $pop3_msg = '';
 
     //------------------------------------
     //カスタムフィールドに入力された情報を取り出す
@@ -169,27 +118,6 @@ function save_custom_postdata($post_id) {
         $pop1_msg = $_POST['pop1_msg'];
     }
 
-    //ふたつ目の見出し
-    if (isset($_POST['pop2_title'])) {
-        $pop2_title = $_POST['pop2_title'];
-    }
-    if (isset($_POST['pop2_img1'])) {
-        $pop2_img1 = $_POST['pop2_img1'];
-    }
-    if (isset($_POST['pop2_msg'])) {
-        $pop2_msg = $_POST['pop2_msg'];
-    }
-
-    //みっつ目の見出し
-    if (isset($_POST['pop3_title'])) {
-        $pop3_title = $_POST['pop3_title'];
-    }
-    if (isset($_POST['pop3_img1'])) {
-        $pop3_img1 = $_POST['pop3_img1'];
-    }
-    if (isset($_POST['pop3_msg'])) {
-        $pop3_msg = $_POST['pop3_msg'];
-    }
     //-----------------------------------------
     //内容が変わっていた場合、保存していた情報を更新する
     //-----------------------------------------
@@ -216,38 +144,102 @@ function save_custom_postdata($post_id) {
         delete_post_meta($post_id, 'pop1_msg', get_post_meta($post_id, 'pop1_msg', true));
     }
 
-    //ふたつ目の見出し
-    if ($pop2_title != get_post_meta($post_id, 'pop2_title', true)) {
-        update_post_meta($post_id, 'pop2_title', $pop2_title);
-    } else {
-        delete_post_meta($post_id, 'pop2_title', get_post_meta($post_id, 'pop2_title', true));
+}
+
+//----------------
+//カスタムウィジェット
+//----------------
+add_action('widgets_init', 'pop1_area');
+add_action('widgets_init', function(){register_widget( 'Pop1_Widget' );});
+
+//ウィジェットエリアの作成
+function pop1_area() {
+    register_sidebar( array(
+        'name' => '宣伝記載エリア',
+        'id' => 'widget_pop',
+        'before_widget' => '<div>',
+        'after_widget' => '</div>'
+    ));
+}
+
+//ウィジェット自体の作成
+class Pop1_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct(false, $name = '宣伝1');
     }
-    if ($pop2_img1 != get_post_meta($post_id, 'pop2_img1', true)) {
-        update_post_meta($post_id, 'pop2_img1', $pop2_img1);
-    } else {
-        delete_post_meta($post_id, 'pop2_img1', get_post_meta($post_id, 'pop2_img1', true));
+    
+    function form($instance) {
+        //ポスト送信されていたらサニタイズして変数に格納
+        if (isset($_POST['title'])) {
+            $title = esc_attr($instance['title']);
+        }
+        if (isset($_POST['body'])) {
+            $body = esc_attr($instance['body']);
+        }
+        if (isset($_POST['img'])) {
+            $img = esc_attr($instance['img']);
+        }
+        
+?>
+        <!-- タイトル -->
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>">
+                <?php echo 'タイトル:'; ?>
+            </label>
+            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title')?>" type="text" value="<?php echo $title; ?>" />
+        </p>
+
+        <!-- 画像 -->
+        <p>
+            <label for="<?php echo $this->get_field_id('img'); ?>">
+                <?php echo '画像:'; ?>
+            </label>
+            <input class="widefat" id="<?php echo $this->get_field_id('img'); ?>" name="<?php echo $this->get_field_name('img'); ?>" type="text" value="<?php echo $img; ?>">
+        </p>
+
+        <!-- 内容 -->
+        <p>
+            <label for="<?php echo $this->get_field_id('body'); ?>">
+            <?php echo '内容:'; ?>
+            </label>
+            <textarea class="widefat" rows="16" cols="20" id="<?php echo $this->get_field_id('body'); ?>" name="<?php echo $this->get_field_name('body'); ?>"><?php echo $body; ?></textarea>
+        </p>
+<?php
     }
-    if ($pop2_msg != get_post_meta($post_id, 'pop2_msg', true)) {
-        update_post_meta($post_id, 'pop2_msg', $pop2_msg);
-    } else {
-        delete_post_meta($post_id, 'pop2_msg', get_post_meta($post_id, 'pop2_msg', true));
+    //ウィジェットに入力された情報を保存する処理
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['title'] = strip_tags($new_instance['title']);    //php,htmlタグを取り除く
+        $instance['img'] = trim($new_instance['img']);
+        $instance['body'] = trim($new_instance['body']);    //先頭と最後の空白を取り除く
+
+        return $instance;
     }
 
-    //みっつ目の見出し
-    if ($pop3_title != get_post_meta($post_id, 'pop3_title', true)) {
-        update_post_meta($post_id, 'pop3_title', $pop3_title);
-    } else {
-        delete_post_meta($post_id, 'pop3_title', get_post_meta($post_id, 'pop3_title', true));
-    }
-    if ($pop3_img1 != get_post_meta($post_id, 'pop3_img1', $pop3_img1)) {
-        update_post_meta($post_id, 'pop3_img1', $pop3_img1);
-    } else {
-        delete_post_meta($post_id, 'pop3_img1', get_post_meta($post_id, 'pop3_img1', true));
-    }
-    if ($pop3_msg != get_post_meta($post_id, 'pop3_msg', true)) {
-        update_post_meta($post_id, 'pop3_msg', $pop3_msg);
-    } else {
-        delete_post_meta($post_id, 'pop3_msg', get_post_meta($post_id, 'pop3_msg', true));
+    //管理画面から入力されたウィジェットを画面に表示する処理
+    function widget($args, $instance) {
+        //配列を変数に格納
+        extract($args);
+
+        //ウィジェットから入力された情報を取得
+        $title = apply_filters('widget_title', $instance['title']);
+        $img = apply_filters('widget_img', $instance['img']);
+        $body = apply_filters('widget_body', $instance['body']);
+
+        //ウィジェットから入力された情報がある場合、htmlを表示する
+        if ($title) {
+?>
+            <h2 class="h2-tittle"><?php echo $title; ?></h2>
+            <div id="oyatsu-figure">
+                <img src="<?php echo $img; ?>">
+            </div>
+            <p>
+                <?php echo $body; ?>
+            </p>
+<?php
+        }
     }
 }
-?>
+
+
+
