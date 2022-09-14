@@ -4,7 +4,7 @@
         <meta charset="<?php bloginfo('charset'); ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?php wp_title(); ?></title>
-        <link rel="stylesheet" href="<?php get_stylesheet_uri(); ?>">
+        <link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>">
         <link rel="stylesheet" href="responsive.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">

@@ -1,5 +1,4 @@
 <?php 
-
 //カスタムヘッダー画像の設置
 $custom_header_defaults = array(
     'default-image' => get_bloginfo('template_url').'/pictures/header-logo/logo.jpg',
@@ -317,7 +316,9 @@ class Pop1_Widget extends WP_Widget {
         if (isset($_POST['img'])) {
             $img = esc_attr($instance['img']);
         }
-        
+        if (isset($_POST['sub_logo'])) {
+            $sub_logo = $_POST['sub_logo'];
+        }
 ?>
         <!-- タイトル -->
         <p>
@@ -338,10 +339,19 @@ class Pop1_Widget extends WP_Widget {
         <!-- 内容 -->
         <p>
             <label for="<?php echo $this->get_field_id('body'); ?>">
-            <?php echo '内容:'; ?>
+                <?php echo '内容:'; ?>
             </label>
             <textarea class="widefat" rows="16" cols="20" id="<?php echo $this->get_field_id('body'); ?>" name="<?php echo $this->get_field_name('body'); ?>"><?php echo $body; ?></textarea>
         </p>
+
+        <!-- サブタイトル部分のアイコン(Font Awesome) -->
+        <p>
+            <label for="<?php echo $this->get_field_id('sub_logo');?>">
+                <?php echo 'サブタイトル部分のアイコン(Font Awesome)' ?>
+            </label>
+            <input class="widefat" id="<?php echo $this->get_field_id('sub_logo'); ?>" name="<?php echo $this->get_field_name('sub_logo'); ?>" type="text" value="<?php echo $sub_logo; ?>">
+        </p>
+
 <?php
     }
     //ウィジェットに入力された情報を保存する処理
@@ -350,6 +360,7 @@ class Pop1_Widget extends WP_Widget {
         $instance['title'] = strip_tags($new_instance['title']);    //php,htmlタグを取り除く
         $instance['img'] = trim($new_instance['img']);
         $instance['body'] = trim($new_instance['body']);    //先頭と最後の空白を取り除く
+        $instance['sub_logo'] = trim($new_instance['sub_logo']);
 
         return $instance;
     }
@@ -363,10 +374,12 @@ class Pop1_Widget extends WP_Widget {
         $title = apply_filters('widget_title', $instance['title']);
         $img = apply_filters('widget_img', $instance['img']);
         $body = apply_filters('widget_body', $instance['body']);
+        $sub_logo = apply_filters('widget_sub_logo', $instance['sub_logo']);
 
         //ウィジェットから入力された情報がある場合、htmlを表示する
         if ($title) {
 ?>
+            <div class="<?php echo $sub_logo; ?>"></div>
             <h2 class="h2-tittle"><?php echo $title; ?></h2>
             <div id="oyatsu-figure">
                 <img src="<?php echo $img; ?>">

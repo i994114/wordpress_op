@@ -37,7 +37,6 @@ Template Name: Home　〜トップページ〜
         <!-- ふたつ目見出し -->
         <div id="wrapper-oyatsu">
             <div class="container">
-                <div class="fas fa-cookie-bite"></div>
                 <?php dynamic_sidebar('宣伝記載エリア'); ?>
             </div>
         </div>

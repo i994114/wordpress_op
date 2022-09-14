@@ -1,13 +1,13 @@
 /*
 Theme Name: 良！即！舞！
 Author: i994114
-Description: 自分で新しくサービスを作った人が、いち早く披露できるようしたテーマです！
+Description: 副業でパン屋をやっている人のために、気軽にHPを用意できるようにするためのテンプレートです！
 Version: 1.0
 */
 
-/*----------*/
+/*-----*/
 /* pan */
-/*----------*/
+/*-----*/
 /*--------------header------------------------------------------------------------------*/
 
 header {
@@ -18,6 +18,7 @@ header {
     text-align: center;
     height: 50px;
     z-index: 1;
+    top: 0;
 }
 
 .is-animation {
@@ -151,7 +152,7 @@ h2 {
 }
 
 .h2-tittle {
-    padding-bottom: 3em;/* ここはあとで統一すること（h2にclass作って、一律でpaddingを設定する）*/
+    padding-bottom: 1em;/* ここはあとで統一すること（h2にclass作って、一律でpaddingを設定する）*/
 }
 
 #oyatsu-figure > img {
