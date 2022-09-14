@@ -1,5 +1,5 @@
         <footer>
-            &copy; 2022 kaz company
+            &copy; 2019 nagomine
         </footer>
 
     </body>

@@ -29,7 +29,7 @@ function pagination($pages = '', $range = 2) {
     } 
 
     if ($pages != 1) {
-        echo "<div class=\"pagination\">\n";
+        echo "<div class=\"pagenation\">\n";
         echo "<ul>\n";
         
         //「Prev」文字の表示:現在のページ数が1より大きい場合は表示
